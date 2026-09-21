@@ -1,0 +1,36 @@
+model:
+  base_model: "meta-llama/Llama-3.1-8B"
+  torch_dtype: "bfloat16"
+
+qlora:
+  r: 32
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules: "all-linear"
+  load_in_4bit: true
+
+training:
+  epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-4
+  max_seq_length: 1024
+  warmup_steps: 100
+  output_dir: "./outputs"
+  push_to_hub: true
+  hub_model_id: "Manahil0/llama-3-1-8b-code-qlora"
+
+dataset:
+  name: "ise-uiuc/Magicoder-Evol-Instruct-110K"
+  subset_size: 10000
+  test_size: 0.1
+
+evaluation:
+  datasets: ["humaneval"]
+  max_new_tokens: 512
+  greedy: true
+
+wandb:
+  project: "qlora-code-generation"
+  entity: "manahil"
+

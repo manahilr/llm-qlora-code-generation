@@ -1,0 +1,35 @@
+name: CI Smoke Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set up credentials
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+        run: echo "Credentials configured"
+
+      - name: Smoke test syntax
+        run: |
+          python -m py_compile train.py && echo "train.py OK"
+          python -m py_compile baseline.py && echo "baseline.py OK"
+          python -m py_compile evaluate.py && echo "evaluate.py OK"
+          python -m py_compile data/prepare_data.py && echo "prepare_data.py OK"
+
+      - name: Test data script syntax
+        run: python -m py_compile data/prepare_data.py && echo "Data script OK"

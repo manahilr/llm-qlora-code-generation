@@ -1,0 +1,36 @@
+.venv/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+.venv/
+venv/
+
+# Model outputs (too large for GitHub)
+outputs/
+*.bin
+*.safetensors
+*.pt
+*.ckpt
+
+# HuggingFace cache
+.cache/
+
+# Wandb logs
+wandb/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+
+# Data
+*.csv
+*.json
+*.parquetdata/processed/
